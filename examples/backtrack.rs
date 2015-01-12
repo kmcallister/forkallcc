@@ -17,6 +17,13 @@ impl Backtrack {
         }
     }
 
+    fn fail(&self) -> ! {
+        match self.checkpoint {
+            Some(ref k) => k.invoke(false),
+            None => panic!("Nothing to be done."),
+        }
+    }
+
     fn guess(&mut self) -> bool {
         call_cc(|k| {
             self.checkpoint = Some(k);
@@ -24,27 +31,22 @@ impl Backtrack {
         })
     }
 
-    fn fail(&self) -> ! {
-        match self.checkpoint {
-            Some(ref k) => k.invoke(false),
-            None => panic!("Nothing to be done."),
+    fn guess_from<I>(&mut self, mut it: I) -> <I as Iterator>::Item
+        where I: Iterator
+    {
+        for i in it {
+            if self.guess() {
+                return i;
+            }
         }
+        self.fail();
     }
 }
 
 fn factor(n: u32) -> (u32, u32) {
-    fn integer(bt: &mut Backtrack, m: u32, n: u32) -> u32 {
-        for i in range(m, n) {
-            if bt.guess() {
-                return i;
-            }
-        }
-        bt.fail();
-    }
-
     let mut bt = Backtrack::new();
-    let i = integer(&mut bt, 2, 100);
-    let j = integer(&mut bt, 2, 100);
+    let i = bt.guess_from(2..100);
+    let j = bt.guess_from(2..100);
 
     if i*j != n {
         bt.fail();
