@@ -1,0 +1,9 @@
+[package]
+
+name = "forkallcc"
+version = "0.0.0"
+description = "fork(2)-based continuations"
+repository = "https://github.com/kmcallister/forkallcc"
+readme = "README.md"
+license = "BSD-3-Clause"
+authors = [ "Keegan McAllister <mcallister.keegan@gmail.com>" ]
