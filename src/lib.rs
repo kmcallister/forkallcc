@@ -1,4 +1,3 @@
-#![feature(libc)]
 #![deny(warnings)]
 
 extern crate libc;
