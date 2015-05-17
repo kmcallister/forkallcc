@@ -1,5 +1,4 @@
 #![deny(warnings)]
-#![allow(unstable)]
 
 extern crate forkallcc;
 
@@ -31,7 +30,7 @@ impl Backtrack {
         })
     }
 
-    fn guess_from<I>(&mut self, mut it: I) -> <I as Iterator>::Item
+    fn guess_from<I>(&mut self, it: I) -> <I as Iterator>::Item
         where I: Iterator
     {
         for i in it {
